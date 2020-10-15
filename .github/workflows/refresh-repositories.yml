@@ -1,9 +1,5 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the main branch
 on:
   push:
     branches:
@@ -11,31 +7,23 @@ on:
   schedule:
     # * is a special character in YAML so you have to quote this string
     - cron:  '*/15 * * * *'
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  fetch:
-    # The type of runner that the job will run on
+  refresh:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
       - name: Fetch repositories
         shell: bash
-        env: # Or as an environment variable
+        env:
           TOKEN: ${{ secrets.ARTIFACT_HUB_TOKEN }}
         run: |
           curl -X GET "https://artifacthub.io/api/v1/repositories/helm" -H "accept: application/json" -H "X-API-KEY: $TOKEN" -o repositories.json
 
-      # Runs a set of commands using the runners shell
-      - name: Echo repositories.json
+      - name: Test repositories.json is not empty
         run: |
-          cat repositories.json
+        [[ ! -f repositories.json || ! -s repositories.json ]] && exit 1
       - name: Upload repositories.json to release
         uses: svenstaro/upload-release-action@v2
         with:
