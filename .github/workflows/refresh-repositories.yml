@@ -33,6 +33,14 @@ jobs:
           curl -X GET "https://artifacthub.io/api/v1/repositories/helm" -H "accept: application/json" -H "X-API-KEY: $TOKEN" -o repositories.json
 
       # Runs a set of commands using the runners shell
-      - name: Echo
+      - name: Echo repositories.json
         run: |
           cat repositories.json
+      - name: Upload repositories.json to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: repositories.json
+          tag: 0.1.0
+          overwrite: true
+          file_glob: true
