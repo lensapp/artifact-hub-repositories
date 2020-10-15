@@ -28,7 +28,7 @@ jobs:
       - name: Fetch repositories
         shell: bash
         env: # Or as an environment variable
-          TOKEN: ${{ secrets.ARTICACT_HUB_TOKEN }}
+          TOKEN: ${{ secrets.ARTIFACT_HUB_TOKEN }}
         run: |
           curl -X GET "https://artifacthub.io/api/v1/repositories/helm" -H "accept: application/json" -H "X-API-KEY: $TOKEN" -o repositories.json
 
