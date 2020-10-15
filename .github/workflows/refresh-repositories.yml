@@ -26,6 +26,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Fetch repositories
+        shell: bash
         env: # Or as an environment variable
           TOKEN: ${{ secrets.ARTICACT_HUB_TOKEN }}
         run: |
