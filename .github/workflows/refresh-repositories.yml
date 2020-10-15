@@ -20,7 +20,10 @@ jobs:
           TOKEN: ${{ secrets.ARTIFACT_HUB_TOKEN }}
         run: |
           curl -X GET "https://artifacthub.io/api/v1/repositories/helm" -H "accept: application/json" -H "X-API-KEY: $TOKEN" -o repositories.json
-
+      - name: Test repositories.json is not empty
+        shell: bash
+        run: |
+          cat repositories.json
       - name: Test repositories.json is not empty
         shell: bash
         run: |
