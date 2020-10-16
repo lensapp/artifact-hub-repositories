@@ -19,15 +19,11 @@ jobs:
         env:
           TOKEN: ${{ secrets.ARTIFACT_HUB_TOKEN }}
         run: |
-          curl -X GET "https://artifacthub.io/api/v1/repositories/helm" -H "accept: application/json" -H "X-API-KEY: $TOKEN" -o repositories.json
+          curl --fail -X GET "https://artifacthub.io/api/v1/repositories/helm" -H "accept: application/json" -H "X-API-KEY: $TOKEN" -o repositories.json
       - name: Output repositories.json
         shell: bash
         run: |
           cat repositories.json
-      - name: Test repositories.json is not empty
-        shell: bash
-        run: |
-          [ ! -f repositories.json ] || [ ! -s repositories.json ] && exit 1
       - name: Upload repositories.json to release
         uses: svenstaro/upload-release-action@v2
         with:
