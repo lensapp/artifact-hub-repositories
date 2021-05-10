@@ -19,7 +19,7 @@ jobs:
         env:
           TOKEN: ${{ secrets.ARTIFACT_HUB_TOKEN }}
           API_KEY: ${{ secrets.ARTIFACT_HUB_API_KEY_ID }}
-          SECRET_KEY: ${{ secrets.ARTIFACT_HUB_SECRET_KEY }}
+          SECRET_KEY: ${{ secrets.ARTIFACT_HUB_API_SECRET_KEY }}
         run: |
           curl --fail -X GET "https://artifacthub.io/api/v1/repositories/helm" -H "accept: application/json" -H "X-API-KEY-ID: $API_KEY" -H "X-API-KEY-SECRET: $SECRET_KEY" -o repositories.json
       - name: Output repositories.json
