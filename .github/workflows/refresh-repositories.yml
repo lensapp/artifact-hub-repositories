@@ -19,7 +19,7 @@ jobs:
         env:
           TOKEN: ${{ secrets.ARTIFACT_HUB_TOKEN }}
         run: |
-          curl --fail -X GET "https://artifacthub.io/api/v1/repositories/helm" -H "accept: application/json" -H "X-API-KEY: $TOKEN" -o repositories.json
+          curl --fail -X GET "https://artifacthub.io/api/v1/repositories/helm" -H "accept: application/json" -H "X-API-KEY-ID: $TOKEN" -o repositories.json
       - name: Output repositories.json
         shell: bash
         run: |
